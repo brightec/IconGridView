@@ -1,0 +1,4 @@
+IconGridView
+------------
+
+IconGridView displays icon buttons in a grid that can be scrolled vertically or horzontally and optional paged as this classes extended UIScrollView.
