@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IconGridView.h"
 
 @interface FirstViewController : UIViewController
+
+@property (weak, nonatomic) IBOutlet IconGridView *gridView;
 
 @end

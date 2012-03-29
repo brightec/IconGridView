@@ -7,12 +7,15 @@
 //
 
 #import "FirstViewController.h"
+#import "GridViewDelegate.h"
 
 @interface FirstViewController ()
 
 @end
 
 @implementation FirstViewController
+
+@synthesize gridView = _gridView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,10 +31,23 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    GridViewDelegate *delegate = [[GridViewDelegate alloc] init];
+    
+    self.gridView.delegate = delegate;
+    self.gridView.datasource = delegate;
+    self.gridView.gridDelegate = delegate;
+    self.gridView.pagingEnabled = NO;
+    self.gridView.autoSpacing = YES;
+    self.gridView.spacing = 10;
+    self.gridView.orientation = IconGridOrientationVertical;
+    
+    [self.gridView setNumberOfIcons:5];
 }
 
 - (void)viewDidUnload
 {
+    [self setGridView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
