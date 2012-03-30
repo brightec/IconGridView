@@ -23,15 +23,14 @@ typedef enum {
 @interface IconGridView : UIScrollView
 
 @property (nonatomic) CGSize cellSize;
-@property (nonatomic) NSInteger spacing;
-@property (nonatomic, unsafe_unretained) id<IconGridViewDataSource> datasource;
-@property (nonatomic, unsafe_unretained) id<IconGridViewDelegate> gridDelegate;
-@property (nonatomic) BOOL autoSpacing;
-@property (nonatomic, unsafe_unretained, readonly) IconButton *selectedCell;
+@property (nonatomic, weak) id<IconGridViewDataSource> datasource;
+@property (nonatomic, weak) id<IconGridViewDelegate> gridDelegate;
+@property (nonatomic, weak, readonly) IconButton *selectedCell;
 @property (nonatomic) IconGridOrientation orientation;
+@property (nonatomic) CGFloat minimumMargin;
 
 - (id)initWithFrame:(CGRect)frame numberOfIcons:(NSInteger)numberOfIcons orientation:(IconGridOrientation)orientation;
--(void)setNumberOfIcons:(NSInteger)numberOfIcons;
+//-(void)setNumberOfIcons:(NSInteger)numberOfIcons;
 
 @end
 

@@ -16,6 +16,8 @@
 @property (nonatomic, strong) NSMutableArray *cells;
 
 -(void)didSelectCell:(UIButton *)cell;
+-(void)createCellsForNumberOfIcons:(NSInteger)numberOfIcons;
+-(UIEdgeInsets)marginForNumberOfColumns:(NSInteger)columnCount andRows:(NSInteger)rowCount;
 
 @end
 
@@ -27,10 +29,9 @@
 @synthesize datasource = _datasource;
 @synthesize gridDelegate = _gridDelegate;
 @synthesize cellSize = _cellSize;
-@synthesize spacing = _spacing;
-@synthesize autoSpacing = _autoSpacing;
 @synthesize selectedCell = _selectedCell;
 @synthesize orientation = _orientation;
+@synthesize minimumMargin = _miniumMargin;
 
 
 - (id)initWithFrame:(CGRect)frame {
@@ -41,160 +42,115 @@
 - (id)initWithFrame:(CGRect)frame numberOfIcons:(NSInteger)numberOfIcons orientation:(IconGridOrientation)orientation {
     self = [super initWithFrame:frame];
     if (self) {
-        _orientation = orientation;
-        _autoSpacing = NO;        
-        _spacing = 8;
+        _orientation = orientation;    
         _cellSize = CGSizeMake(44, 44);
+        _miniumMargin = 1;
         
-        [self setNumberOfIcons:numberOfIcons];
+        [self createCellsForNumberOfIcons:numberOfIcons];
     }
     return self;
 }
 
 
+// Returns the calculated margin per cell based on the remaining space
+// after accounting x rows and columns of the visible view.bounds
+-(UIEdgeInsets)marginForNumberOfColumns:(NSInteger)columnCount andRows:(NSInteger)rowCount {
+    
+    // calculate margins based on whitespace
+    CGFloat rightWhiteSpace = (self.bounds.size.width - (columnCount * self.cellSize.width));
+    CGFloat bottomWhiteSpace = (self.bounds.size.height - (rowCount * self.cellSize.height));
+    
+    CGFloat marginRight = (rightWhiteSpace / (columnCount-1));
+    CGFloat marginBottom = (bottomWhiteSpace / (rowCount-1));    
+    
+//    NSLog(@"Whitespace: r=%f, b=%f", rightWhiteSpace, bottomWhiteSpace);
+//    NSLog(@"Margin: r=%f, b=%f", marginRight, marginBottom);
+    
+    return UIEdgeInsetsMake(0, 0, marginBottom, marginRight);
+}
+
+
 - (void)layoutSubviews {
     
-    NSInteger verticalSpacing = self.spacing;
-    NSInteger horizontalSpacing = self.spacing;    
+    
+    
+    ////////////////////////////////////////
+    /// Calculate columns, rows and margins
+    ////////////////////////////////////////
     
     // calculate the number of columns in each row
-    NSInteger columns = floor((self.bounds.size.width / (self.cellSize.width + verticalSpacing)));      
+    NSInteger columns = floor((self.bounds.size.width / (self.cellSize.width)));
     
     // calculate the number of rows in each column
-    NSInteger rows = floor((self.bounds.size.height / (self.cellSize.height + horizontalSpacing)));    
-    
-    if (self.autoSpacing) {
-        verticalSpacing = floor((self.bounds.size.width - (columns * self.cellSize.width)) / columns-1);
-        horizontalSpacing = floor((self.bounds.size.height - (rows * self.cellSize.height)) / rows-1);
-    }    
-    
-    if (self.orientation == IconGridOrientationVertical) {
-        
-        if (!self.pagingEnabled) {
-            horizontalSpacing = verticalSpacing;
-        }
-        
-        // reposition cells
-        for (int i = 0; i < self.cells.count; i++) {
-            
-            IconButton *button = (IconButton *)[self.cells objectAtIndex:i];
-            
-            // calculate x and y coordinate for cell
-            NSInteger x = ((i % columns) * ((int)self.cellSize.width + verticalSpacing)) + verticalSpacing;
-            NSInteger y = ((i / columns) * ((int)self.cellSize.height + horizontalSpacing)) + horizontalSpacing;
-            
-            button.frame = CGRectMake(x, y, self.cellSize.width, self.cellSize.height);
-            
-            if ([(id)self.datasource respondsToSelector:@selector(iconGridView:imageForCellWithIndex:)]) {
-                UIImage *cellImage = [((id <IconGridViewDataSource>)self.datasource) iconGridView:self imageForCellWithIndex:i];
-                button.image = cellImage;
-            }
-            
-            if ([(id)self.datasource respondsToSelector:@selector(iconGridView:titleForCellWithIndex:)]) {
-                NSString *label = [((id <IconGridViewDataSource>)self.datasource) iconGridView:self titleForCellWithIndex:i];
-                button.label = label;
-            }              
-        } 
-        
-        // calculate content height
-        CGFloat height = ceil(((self.cells.count/columns)+1) * (self.cellSize.height + horizontalSpacing));
-        if (self.pagingEnabled) {
-            height = (ceil(height / self.frame.size.height) * (self.frame.size.height)) - horizontalSpacing;
-        }
-        
-        self.contentSize = CGSizeMake(self.bounds.size.width, height);
-    }
-    else {
-        
-        if (!self.pagingEnabled) {
-            verticalSpacing = horizontalSpacing;
-        }
-        
-        
-        if (self.pagingEnabled) {
-            
-            
-            NSEnumerator *enumerator = [self.cells objectEnumerator];
-            
+    NSInteger rows = floor((self.bounds.size.height / (self.cellSize.height)));    
 
-            int i = 0;
-            int p = 0; // page index
+    UIEdgeInsets margin = [self marginForNumberOfColumns:columns andRows:rows];
+    
+    while (margin.right < self.minimumMargin && columns > 1) {
+        columns--;
+        margin = [self marginForNumberOfColumns:columns andRows:rows];        
+    }
+    
+    while (margin.bottom < self.minimumMargin && rows > 1) {
+        rows--;
+        margin = [self marginForNumberOfColumns:columns andRows:rows];        
+    }
+    
+    NSInteger p = 0;
+    
+    
+        
+    ////////////////////
+    /// Position buttons
+    ////////////////////
+    
+    NSEnumerator *enumerator = [self.cells objectEnumerator];
+    int i = 0;
+    
+    // iterate through each column
+    for (int r = 0; r < rows; r++) {
+        
+        BOOL hasBraked = NO;
+        
+        // iterate through each row
+        for (int c = 0; c < columns; c++) {
             
-            // iterate through each row
-            for (int r = 0; r < rows; r++) {
+            IconButton *button;
+            if (button = (IconButton *)[enumerator nextObject]) {
                 
-                BOOL hasBraked = NO;
-                
-                // iterate through each column
-                for (int c = 0; c < columns; c++) {
-                    
-                    NSLog(@"page: %i, row: %i, column: %i", p, r, c);
-                    
-                    IconButton *button;
-                    if (button = (IconButton *)[enumerator nextObject]) {
-                        
-                        
-                        
-                        // calculate x and y coordinate for cell
-                        NSInteger x = (c * ((int)self.cellSize.width + verticalSpacing)) + verticalSpacing  + (p * self.bounds.size.width);
-                        NSInteger y = (r * ((int)self.cellSize.height + horizontalSpacing)) + horizontalSpacing;
-                        
-                        button.frame = CGRectMake(x, y, self.cellSize.width, self.cellSize.height);   
-                        
-                        
-                        
-                        if ([(id)self.datasource respondsToSelector:@selector(iconGridView:imageForCellWithIndex:)]) {
-                            UIImage *cellImage = [((id <IconGridViewDataSource>)self.datasource) iconGridView:self imageForCellWithIndex:i];
-                            button.image = cellImage;
-                        }
-                        
-                        if ([(id)self.datasource respondsToSelector:@selector(iconGridView:titleForCellWithIndex:)]) {
-                            NSString *label = [((id <IconGridViewDataSource>)self.datasource) iconGridView:self titleForCellWithIndex:i];
-                            button.label = label;
-                        }                          
-                        
-                        i++;                        
+                // calculate offsets for each page
+                CGFloat pageOffsetY = 0;
+                CGFloat pageOffsetX = 0;
+                if (self.pagingEnabled) {
+                    if (self.orientation == IconGridOrientationVertical) {
+                        pageOffsetY = (p * self.bounds.size.height);
+                        pageOffsetX = 0;
                     }
                     else {
-                        
-                        hasBraked = YES;
-                        break;
+                        pageOffsetY = 0;
+                        pageOffsetX = (p * self.bounds.size.width);                        
                     }
                     
-                } 
-                
-                if (hasBraked) {
-                    break;
                 }
-                
-                if (r == rows-1) {
-                    r = -1;
-                    p++;
+                else {
+                    if (self.orientation == IconGridOrientationVertical) {
+                        pageOffsetY = (p * (rows * (self.cellSize.height+margin.bottom)));
+                        pageOffsetX = 0;
+                    }
+                    else {
+                        pageOffsetY = 0;                        
+                        pageOffsetX = (p * (columns * (self.cellSize.height+margin.right)));                        
+                    }
                 }
-                
-            }            
-            
-            
-            
-            
-            
-            
-        } else {
-        
-        
-        
-        
-            
-            // reposition cells
-            for (int i = 0; i < self.cells.count; i++) {
-                
-                IconButton *button = (IconButton *)[self.cells objectAtIndex:i];
                 
                 // calculate x and y coordinate for cell
-                NSInteger x = ((i / rows) * ((int)self.cellSize.width + verticalSpacing)) + verticalSpacing;
-                NSInteger y = ((i % rows) * ((int)self.cellSize.height + horizontalSpacing)) + horizontalSpacing;
+                CGFloat x = (c * (self.cellSize.width + margin.right)) + pageOffsetX;
+                CGFloat y = (r * (self.cellSize.height + margin.bottom)) + pageOffsetY;
                 
-                button.frame = CGRectMake(x, y, self.cellSize.width, self.cellSize.height); 
+//                NSLog(@"Row: x=%f, y=%f", x, y);
+                
+                button.frame = CGRectMake(x, y, self.cellSize.width, self.cellSize.height);   
+                
                 
                 if ([(id)self.datasource respondsToSelector:@selector(iconGridView:imageForCellWithIndex:)]) {
                     UIImage *cellImage = [((id <IconGridViewDataSource>)self.datasource) iconGridView:self imageForCellWithIndex:i];
@@ -204,31 +160,73 @@
                 if ([(id)self.datasource respondsToSelector:@selector(iconGridView:titleForCellWithIndex:)]) {
                     NSString *label = [((id <IconGridViewDataSource>)self.datasource) iconGridView:self titleForCellWithIndex:i];
                     button.label = label;
-                }                
+                }                          
+                
+                i++;                        
+            }
+            else {
+                
+                hasBraked = YES;
+                break;
             }
             
-            
-            
-            
-            
+        } 
+        
+        if (hasBraked) {
+            break;
         }
         
-        CGFloat width = ceil(((self.cells.count/rows)+1) * (self.cellSize.width + verticalSpacing));
+        // reset counter to start again
+        if (r == rows-1) {
+            r = -1;
+            p++;
+        }
+    }       
+    
+        
+
+    //////////////////////////
+    /// Calculate content size 
+    //////////////////////////
+    
+    CGFloat width = 0;
+    CGFloat height = 0;
+    if (self.orientation == IconGridOrientationVertical) {
+        
+        width = self.bounds.size.width; 
+        
         if (self.pagingEnabled) {
-            width = (ceil(width / self.frame.size.width) * (self.frame.size.width)) - verticalSpacing;
+            height = self.bounds.size.height * (p+1);
+        }
+        else {
+            height = (((self.cells.count/columns)+1) * (self.cellSize.height + margin.bottom)) - margin.bottom;            
+        }
+    }
+    else {
+
+        if (self.pagingEnabled) {
+            width = self.bounds.size.width * (p+1);
+        } 
+        else {
+            width = ceil(((self.cells.count/rows)+1) * (self.cellSize.width + margin.right)) - margin.right;            
         }
         
-        self.contentSize = CGSizeMake(width, self.bounds.size.height);        
+        height = self.bounds.size.height;
     }
     
-    NSLog(@"-----------------------");
-    NSLog(@"Cell size: w = %f, h = %f", self.cellSize.width, self.cellSize.height);
-    NSLog(@"Frame: w = %f, h = %f", self.frame.size.width, self.frame.size.height);
-    NSLog(@"Vertical spacing: %i", verticalSpacing);
-    NSLog(@"Horizonal spacing: %i", horizontalSpacing);    
-    NSLog(@"Content size: w = %f, h = %f", self.contentSize.width, self.contentSize.height);
-    NSLog(@"Columns: %i", columns);
-    NSLog(@"Rows: %i", rows);
+    self.contentSize = CGSizeMake(width, height);        
+    
+    // debugging
+//    NSLog(@"-----------------------");
+//    NSLog(@"Pages: %i", p+1);
+//    NSLog(@"Cell size: w = %f, h = %f", self.cellSize.width, self.cellSize.height);
+//    NSLog(@"Margin bottom: %f", margin.bottom);
+//    NSLog(@"Margin right: %f", margin.right);            
+//    NSLog(@"Bounds: w = %f, h = %f", self.bounds.size.width, self.bounds.size.height);
+//    NSLog(@"Content size: w = %f, h = %f", self.contentSize.width, self.contentSize.height);    
+//    NSLog(@"Columns: %i", columns);
+//    NSLog(@"Rows: %i", rows);    
+//    NSLog(@"------");      
 }
 
 
@@ -245,31 +243,31 @@
 }
 
 
--(void)setSpacing:(NSInteger)spacing {
-    _spacing = spacing;
-    [self setNeedsDisplay];
-}
-
-
--(void)setAutoSpacing:(BOOL)autoSpacing {
-    _autoSpacing = autoSpacing;
-    [self setNeedsDisplay];
+-(void)setMinimumMargin:(CGFloat)minimumMargin {
+    _miniumMargin = minimumMargin;
+    [self layoutSubviews];
 }
 
 
 -(void)setCellSize:(CGSize)cellSize {
     _cellSize = cellSize;
-   [self setNeedsDisplay]; 
+   [self layoutSubviews]; 
 }
 
 
 -(void)setOrientation:(IconGridOrientation)orientation {
     _orientation = orientation;
-   [self setNeedsDisplay]; 
+   [self layoutSubviews]; 
 }
 
 
 -(void)setNumberOfIcons:(NSInteger)numberOfIcons {
+    [self createCellsForNumberOfIcons:numberOfIcons];
+    [self layoutSubviews];    
+}
+
+
+-(void)createCellsForNumberOfIcons:(NSInteger)numberOfIcons {
     _selectedCell = nil;
     _cells = [NSMutableArray array];
     
@@ -277,15 +275,14 @@
     for (int i = 0; i < numberOfIcons; i++) {
         
         IconButton *button = [[IconButton alloc] initWithFrame:CGRectZero];
-        button.backgroundColor = [UIColor clearColor];
+        button.backgroundColor = [UIColor redColor];
         button.tag = i;
         [button addTarget:self action:@selector(didSelectCell:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:button];
         
         [_cells addObject:button];
-    }
-    
-    [self layoutSubviews];    
+    }    
 }
+
 
 @end

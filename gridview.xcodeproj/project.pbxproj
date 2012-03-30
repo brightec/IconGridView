@@ -7,20 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E68051D1525B57700FC440A /* HorizontalGridController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68051C1525B57700FC440A /* HorizontalGridController.m */; };
+		7E6805201525B65F00FC440A /* PagedGridController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68051F1525B65F00FC440A /* PagedGridController.m */; };
 		7EC071171524D09300FB843E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EC071161524D09300FB843E /* UIKit.framework */; };
 		7EC071191524D09300FB843E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EC071181524D09300FB843E /* Foundation.framework */; };
 		7EC0711B1524D09300FB843E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EC0711A1524D09300FB843E /* CoreGraphics.framework */; };
 		7EC071211524D09300FB843E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7EC0711F1524D09300FB843E /* InfoPlist.strings */; };
 		7EC071231524D09300FB843E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC071221524D09300FB843E /* main.m */; };
 		7EC071271524D09300FB843E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC071261524D09300FB843E /* AppDelegate.m */; };
-		7EC0712A1524D09300FB843E /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC071291524D09300FB843E /* FirstViewController.m */; };
-		7EC0712C1524D09300FB843E /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EC0712B1524D09300FB843E /* first.png */; };
-		7EC0712E1524D09300FB843E /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EC0712D1524D09300FB843E /* first@2x.png */; };
-		7EC071311524D09300FB843E /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC071301524D09300FB843E /* SecondViewController.m */; };
-		7EC071331524D09300FB843E /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EC071321524D09300FB843E /* second.png */; };
-		7EC071351524D09300FB843E /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EC071341524D09300FB843E /* second@2x.png */; };
-		7EC071381524D09300FB843E /* FirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7EC071361524D09300FB843E /* FirstViewController.xib */; };
-		7EC0713B1524D09300FB843E /* SecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7EC071391524D09300FB843E /* SecondViewController.xib */; };
+		7EC0712A1524D09300FB843E /* VerticalGridController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC071291524D09300FB843E /* VerticalGridController.m */; };
 		7EC071461524D0B600FB843E /* IconButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC071431524D0B600FB843E /* IconButton.m */; };
 		7EC071471524D0B600FB843E /* IconGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC071451524D0B600FB843E /* IconGridView.m */; };
 		7EC0714A1524D0DB00FB843E /* piggy-bank.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EC071481524D0DB00FB843E /* piggy-bank.png */; };
@@ -32,10 +27,13 @@
 		7EC0715B1524D21C00FB843E /* RRLuminanceFromRGBComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC071571524D21B00FB843E /* RRLuminanceFromRGBComponents.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7EC0715F1524D24100FB843E /* UIColor+RRUIKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC0715E1524D24100FB843E /* UIColor+RRUIKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7EC071611524D26000FB843E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EC071601524D26000FB843E /* QuartzCore.framework */; };
-		7EC071641524D5D800FB843E /* GridViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC071631524D5D700FB843E /* GridViewDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7E68051B1525B57700FC440A /* HorizontalGridController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HorizontalGridController.h; sourceTree = "<group>"; };
+		7E68051C1525B57700FC440A /* HorizontalGridController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HorizontalGridController.m; sourceTree = "<group>"; };
+		7E68051E1525B65F00FC440A /* PagedGridController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagedGridController.h; sourceTree = "<group>"; };
+		7E68051F1525B65F00FC440A /* PagedGridController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagedGridController.m; sourceTree = "<group>"; };
 		7EC071121524D09300FB843E /* gridview.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gridview.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EC071161524D09300FB843E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7EC071181524D09300FB843E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -46,16 +44,8 @@
 		7EC071241524D09300FB843E /* gridview-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "gridview-Prefix.pch"; sourceTree = "<group>"; };
 		7EC071251524D09300FB843E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7EC071261524D09300FB843E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		7EC071281524D09300FB843E /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		7EC071291524D09300FB843E /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		7EC0712B1524D09300FB843E /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
-		7EC0712D1524D09300FB843E /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
-		7EC0712F1524D09300FB843E /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		7EC071301524D09300FB843E /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
-		7EC071321524D09300FB843E /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
-		7EC071341524D09300FB843E /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
-		7EC071371524D09300FB843E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FirstViewController.xib; sourceTree = "<group>"; };
-		7EC0713A1524D09300FB843E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SecondViewController.xib; sourceTree = "<group>"; };
+		7EC071281524D09300FB843E /* VerticalGridController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VerticalGridController.h; sourceTree = "<group>"; };
+		7EC071291524D09300FB843E /* VerticalGridController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VerticalGridController.m; sourceTree = "<group>"; };
 		7EC071421524D0B600FB843E /* IconButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconButton.h; sourceTree = "<group>"; };
 		7EC071431524D0B600FB843E /* IconButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconButton.m; sourceTree = "<group>"; };
 		7EC071441524D0B600FB843E /* IconGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconGridView.h; sourceTree = "<group>"; };
@@ -75,8 +65,6 @@
 		7EC0715D1524D24100FB843E /* UIColor+RRUIKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+RRUIKit.h"; sourceTree = "<group>"; };
 		7EC0715E1524D24100FB843E /* UIColor+RRUIKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+RRUIKit.m"; sourceTree = "<group>"; };
 		7EC071601524D26000FB843E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		7EC071621524D5D700FB843E /* GridViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridViewDelegate.h; sourceTree = "<group>"; };
-		7EC071631524D5D700FB843E /* GridViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridViewDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,18 +118,12 @@
 				7EC071411524D0A400FB843E /* Classes */,
 				7EC071251524D09300FB843E /* AppDelegate.h */,
 				7EC071261524D09300FB843E /* AppDelegate.m */,
-				7EC071281524D09300FB843E /* FirstViewController.h */,
-				7EC071291524D09300FB843E /* FirstViewController.m */,
-				7EC0712B1524D09300FB843E /* first.png */,
-				7EC0712D1524D09300FB843E /* first@2x.png */,
-				7EC0712F1524D09300FB843E /* SecondViewController.h */,
-				7EC071301524D09300FB843E /* SecondViewController.m */,
-				7EC071321524D09300FB843E /* second.png */,
-				7EC071341524D09300FB843E /* second@2x.png */,
-				7EC071361524D09300FB843E /* FirstViewController.xib */,
-				7EC071391524D09300FB843E /* SecondViewController.xib */,
-				7EC071621524D5D700FB843E /* GridViewDelegate.h */,
-				7EC071631524D5D700FB843E /* GridViewDelegate.m */,
+				7EC071281524D09300FB843E /* VerticalGridController.h */,
+				7EC071291524D09300FB843E /* VerticalGridController.m */,
+				7E68051B1525B57700FC440A /* HorizontalGridController.h */,
+				7E68051C1525B57700FC440A /* HorizontalGridController.m */,
+				7E68051E1525B65F00FC440A /* PagedGridController.h */,
+				7E68051F1525B65F00FC440A /* PagedGridController.m */,
 				7EC0711D1524D09300FB843E /* Supporting Files */,
 			);
 			path = gridview;
@@ -248,12 +230,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EC071211524D09300FB843E /* InfoPlist.strings in Resources */,
-				7EC0712C1524D09300FB843E /* first.png in Resources */,
-				7EC0712E1524D09300FB843E /* first@2x.png in Resources */,
-				7EC071331524D09300FB843E /* second.png in Resources */,
-				7EC071351524D09300FB843E /* second@2x.png in Resources */,
-				7EC071381524D09300FB843E /* FirstViewController.xib in Resources */,
-				7EC0713B1524D09300FB843E /* SecondViewController.xib in Resources */,
 				7EC0714A1524D0DB00FB843E /* piggy-bank.png in Resources */,
 				7EC0714B1524D0DB00FB843E /* piggy-bank@2x.png in Resources */,
 			);
@@ -268,8 +244,7 @@
 			files = (
 				7EC071231524D09300FB843E /* main.m in Sources */,
 				7EC071271524D09300FB843E /* AppDelegate.m in Sources */,
-				7EC0712A1524D09300FB843E /* FirstViewController.m in Sources */,
-				7EC071311524D09300FB843E /* SecondViewController.m in Sources */,
+				7EC0712A1524D09300FB843E /* VerticalGridController.m in Sources */,
 				7EC071461524D0B600FB843E /* IconButton.m in Sources */,
 				7EC071471524D0B600FB843E /* IconGridView.m in Sources */,
 				7EC0714F1524D20000FB843E /* CGUtils.m in Sources */,
@@ -278,7 +253,8 @@
 				7EC0715A1524D21C00FB843E /* RRGlossCausticShader.m in Sources */,
 				7EC0715B1524D21C00FB843E /* RRLuminanceFromRGBComponents.m in Sources */,
 				7EC0715F1524D24100FB843E /* UIColor+RRUIKit.m in Sources */,
-				7EC071641524D5D800FB843E /* GridViewDelegate.m in Sources */,
+				7E68051D1525B57700FC440A /* HorizontalGridController.m in Sources */,
+				7E6805201525B65F00FC440A /* PagedGridController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,22 +267,6 @@
 				7EC071201524D09300FB843E /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		7EC071361524D09300FB843E /* FirstViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7EC071371524D09300FB843E /* en */,
-			);
-			name = FirstViewController.xib;
-			sourceTree = "<group>";
-		};
-		7EC071391524D09300FB843E /* SecondViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7EC0713A1524D09300FB843E /* en */,
-			);
-			name = SecondViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -398,6 +358,7 @@
 				7EC071401524D09300FB843E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -7,10 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "VerticalGridController.h"
+#import "HorizontalGridController.h"
+#import "PagedGridController.h"
 
-#import "FirstViewController.h"
-
-#import "SecondViewController.h"
 
 @implementation AppDelegate
 
@@ -20,13 +20,23 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
     // Override point for customization after application launch.
-    UIViewController *viewController1 = [[FirstViewController alloc] initWithNibName:@"FirstViewController" bundle:nil];
-    UIViewController *viewController2 = [[SecondViewController alloc] initWithNibName:@"SecondViewController" bundle:nil];
+    VerticalGridController *verticalGridController = [[VerticalGridController alloc] init];
+    UINavigationController *verticalNavController = [[UINavigationController alloc] initWithRootViewController:verticalGridController];
+    
+    HorizontalGridController *horizontalGridController = [[HorizontalGridController alloc] init];
+    UINavigationController *horizontalNavController = [[UINavigationController alloc] initWithRootViewController:horizontalGridController];
+    
+    PagedGridController *pagedGridController = [[PagedGridController alloc] init];
+    UINavigationController *pagedNavController = [[UINavigationController alloc] initWithRootViewController:pagedGridController];
+    
     self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = [NSArray arrayWithObjects:viewController1, viewController2, nil];
+    self.tabBarController.viewControllers = [NSArray arrayWithObjects:verticalNavController, horizontalNavController, pagedNavController, nil];
+    
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

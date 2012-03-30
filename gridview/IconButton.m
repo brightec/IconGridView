@@ -37,7 +37,8 @@
         
         CGMutablePathRef path = createRoundedRectForRect(rect, 5);      
         CGContextAddPath(context, path);
-        CGContextClip(context);        
+        CGContextClip(context);  
+        CFRelease(path);
         
         RRGlossCausticShader *shader = [[RRGlossCausticShader alloc] init];
         [shader setNoncausticColor:[UIColor colorWithRed:127.0/255.0 green:0 blue:127.0/255.0 alpha:1.0]];

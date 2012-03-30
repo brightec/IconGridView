@@ -1,5 +1,5 @@
 //
-//  FirstViewController.h
+//  VerticalGridController.h
 //  gridview
 //
 //  Created by Cameron Cooke on 29/03/2012.
@@ -9,8 +9,5 @@
 #import <UIKit/UIKit.h>
 #import "IconGridView.h"
 
-@interface FirstViewController : UIViewController
-
-@property (weak, nonatomic) IBOutlet IconGridView *gridView;
-
+@interface VerticalGridController : UIViewController <IconGridViewDataSource, IconGridViewDelegate, UIScrollViewDelegate>
 @end
